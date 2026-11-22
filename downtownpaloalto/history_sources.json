@@ -281,14 +281,14 @@
 "note": "Upholstery shop. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
-"name": "Chatterton's",
+"name": "Chatterton Bakery",
 "address": "335 University Ave",
 "start": 1924,
-"end": 1924,
+"end": 1925,
 "category": "food",
 "approx": true,
 "source": "directory",
-"note": "Bakery. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer."
+"note": "Bakery. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Golden Poppy Bakery",
@@ -391,14 +391,14 @@
 "note": "Stationery store. Listed in Palo Alto city directories and phone books (1904–1925); actual years open may be longer."
 },
 {
-"name": "Mrs. E. L. Hyde School Supplies",
+"name": "Hyde's Bookstore",
 "address": "370 University Ave",
 "start": 1924,
-"end": 1924,
+"end": 1925,
 "category": "retail",
 "approx": true,
 "source": "directory",
-"note": "School supply store. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer."
+"note": "School supply store. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Sequoia Book Shop",
@@ -464,11 +464,11 @@
 "name": "The Ernest Wilson Co.",
 "address": "135 University Ave",
 "start": 1924,
-"end": 1924,
+"end": 1925,
 "category": "food",
 "approx": true,
 "source": "directory",
-"note": "Confectionery. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer."
+"note": "Confectionery. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Franklin's Smoke Shop",
@@ -581,14 +581,14 @@
 "note": "Clothing store. Listed in Palo Alto city directories and phone books (1924–1955); actual years open may be longer."
 },
 {
-"name": "Wideman & Son",
+"name": "Wideman's",
 "address": "185 University Ave",
 "start": 1924,
-"end": 1947,
+"end": 1962,
 "category": "retail",
 "approx": true,
 "source": "directory",
-"note": "Clothing store. Listed in Palo Alto city directories and phone books (1924–1947); actual years open may be longer."
+"note": "Clothing store. Listed in Palo Alto city directories and phone books (1924–1962); actual years open may be longer."
 },
 {
 "name": "Co-ed Smart Shoppe",
@@ -1188,7 +1188,7 @@
 "category": "retail",
 "approx": true,
 "source": "directory",
-"note": "Variety store. Listed in Palo Alto city directories and phone books (1924–1947); actual years open may be longer."
+"note": "Five-and-dime store. Listed in Palo Alto city directories and phone books (1924–1947); actual years open may be longer."
 },
 {
 "name": "Newton Studio",
@@ -1299,16 +1299,6 @@
 "approx": true,
 "source": "directory",
 "note": "Waffle restaurant. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
-},
-{
-"name": "Wilson's",
-"address": "135 University Ave",
-"start": 1924,
-"end": 1925,
-"category": "food",
-"approx": true,
-"source": "directory",
-"note": "Confectionery restaurant. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Singer Sewing Machine Co.",
@@ -1581,16 +1571,6 @@
 "note": "Upholstery shop. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
-"name": "Chatterton Bakery",
-"address": "335 University Ave",
-"start": 1924,
-"end": 1925,
-"category": "food",
-"approx": true,
-"source": "directory",
-"note": "Bakery. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
-},
-{
 "name": "Christensen & Anderson",
 "address": "167 Hamilton Ave",
 "start": 1924,
@@ -1779,16 +1759,6 @@
 "approx": true,
 "source": "directory",
 "note": "Feed and fuel store. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
-},
-{
-"name": "Hyde's Bookstore",
-"address": "370 University Ave",
-"start": 1924,
-"end": 1925,
-"category": "retail",
-"approx": true,
-"source": "directory",
-"note": "Bookstore. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Italo-American Grocery",
@@ -2369,16 +2339,6 @@
 "approx": true,
 "source": "directory",
 "note": "Consignment shop. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
-},
-{
-"name": "Woolworth's",
-"address": "222 University Ave",
-"start": 1924,
-"end": 1925,
-"category": "retail",
-"approx": true,
-"source": "directory",
-"note": "Five-and-dime store. Listed in Palo Alto city directories and phone books (1924–1925); actual years open may be longer."
 },
 {
 "name": "Yamamura Grocery",
@@ -5441,16 +5401,6 @@
 "note": "Drapery shop. Listed in Palo Alto city directories and phone books (1947–1957); actual years open may be longer."
 },
 {
-"name": "Wideman's",
-"address": "185 University Ave",
-"start": 1952,
-"end": 1962,
-"category": "retail",
-"approx": true,
-"source": "directory",
-"note": "Clothing store. Listed in Palo Alto city directories and phone books (1952–1962); actual years open may be longer."
-},
-{
 "name": "Eve Young",
 "address": "370 University Ave",
 "start": 1947,
@@ -6594,11 +6544,11 @@
 "name": "McCosh Draperies",
 "address": "129 Lytton Ave",
 "start": 1947,
-"end": 1957,
+"end": 1958,
 "category": "retail",
 "approx": true,
 "source": "directory",
-"note": "Drapery shop. Listed in Palo Alto city directories and phone books (1947–1957); actual years open may be longer."
+"note": "Drapery shop. Listed in Palo Alto city directories and phone books (1947–1958); actual years open may be longer."
 },
 {
 "name": "Medico-Dental Garage",
@@ -8849,16 +8799,6 @@
 "approx": true,
 "source": "directory",
 "note": "Tavern. Listed in Palo Alto city directories and phone books (1958); actual years open may be longer."
-},
-{
-"name": "McCosh's",
-"address": "129 Lytton Ave",
-"start": 1958,
-"end": 1958,
-"category": "services",
-"approx": true,
-"source": "directory",
-"note": "Upholstery shop. Listed in Palo Alto city directories and phone books (1958); actual years open may be longer."
 },
 {
 "name": "Alley Art",

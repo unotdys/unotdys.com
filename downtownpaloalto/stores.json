@@ -3226,14 +3226,14 @@
   "lng": -122.1605202
  },
  {
-  "name": "Chatterton's",
+  "name": "Chatterton Bakery",
   "address": "335 University Ave",
   "start": 1924,
-  "end": 1924,
+  "end": 1925,
   "category": "food",
   "approx": true,
   "source": "directory",
-  "note": "Bakery. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer.",
+  "note": "Bakery. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4464764,
   "lng": -122.1614222
  },
@@ -3358,14 +3358,14 @@
   "lng": -122.1621464
  },
  {
-  "name": "Mrs. E. L. Hyde School Supplies",
+  "name": "Hyde's Bookstore",
   "address": "370 University Ave",
   "start": 1924,
-  "end": 1924,
+  "end": 1925,
   "category": "retail",
   "approx": true,
   "source": "directory",
-  "note": "School supply store. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer.",
+  "note": "School supply store. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4466594,
   "lng": -122.1605117
  },
@@ -3445,11 +3445,11 @@
   "name": "The Ernest Wilson Co.",
   "address": "135 University Ave",
   "start": 1924,
-  "end": 1924,
+  "end": 1925,
   "category": "food",
   "approx": true,
   "source": "directory",
-  "note": "Confectionery. Listed in Palo Alto city directories and phone books (1924); actual years open may be longer.",
+  "note": "Confectionery. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4441547,
   "lng": -122.16372
  },
@@ -3586,14 +3586,14 @@
   "lng": -122.1638183
  },
  {
-  "name": "Wideman & Son",
+  "name": "Wideman's",
   "address": "185 University Ave",
   "start": 1924,
-  "end": 1947,
+  "end": 1962,
   "category": "retail",
   "approx": true,
   "source": "directory",
-  "note": "Clothing store. Listed in Palo Alto city directories and phone books (1924\u20131947); actual years open may be longer.",
+  "note": "Clothing store. Listed in Palo Alto city directories and phone books (1924\u20131962); actual years open may be longer.",
   "lat": 37.4447261,
   "lng": -122.1631693
  },
@@ -4253,7 +4253,7 @@
   "category": "retail",
   "approx": true,
   "source": "directory",
-  "note": "Variety store. Listed in Palo Alto city directories and phone books (1924\u20131947); actual years open may be longer.",
+  "note": "Five-and-dime store. Listed in Palo Alto city directories and phone books (1924\u20131947); actual years open may be longer.",
   "lat": 37.4449355,
   "lng": -122.1622055
  },
@@ -4388,18 +4388,6 @@
   "note": "Waffle restaurant. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4450606,
   "lng": -122.1628911
- },
- {
-  "name": "Wilson's",
-  "address": "135 University Ave",
-  "start": 1924,
-  "end": 1925,
-  "category": "food",
-  "approx": true,
-  "source": "directory",
-  "note": "Confectionery restaurant. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
-  "lat": 37.4441547,
-  "lng": -122.16372
  },
  {
   "name": "Singer Sewing Machine Co.",
@@ -4726,18 +4714,6 @@
   "lng": -122.1644518
  },
  {
-  "name": "Chatterton Bakery",
-  "address": "335 University Ave",
-  "start": 1924,
-  "end": 1925,
-  "category": "food",
-  "approx": true,
-  "source": "directory",
-  "note": "Bakery. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
-  "lat": 37.4464764,
-  "lng": -122.1614222
- },
- {
   "name": "Christensen & Anderson",
   "address": "167 Hamilton Ave",
   "start": 1924,
@@ -4952,18 +4928,6 @@
   "note": "Feed and fuel store. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4454346,
   "lng": -122.1612133
- },
- {
-  "name": "Hyde's Bookstore",
-  "address": "370 University Ave",
-  "start": 1924,
-  "end": 1925,
-  "category": "retail",
-  "approx": true,
-  "source": "directory",
-  "note": "Bookstore. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
-  "lat": 37.4466594,
-  "lng": -122.1605117
  },
  {
   "name": "Italo-American Grocery",
@@ -5660,18 +5624,6 @@
   "note": "Consignment shop. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
   "lat": 37.4466189,
   "lng": -122.1607364
- },
- {
-  "name": "Woolworth's",
-  "address": "222 University Ave",
-  "start": 1924,
-  "end": 1925,
-  "category": "retail",
-  "approx": true,
-  "source": "directory",
-  "note": "Five-and-dime store. Listed in Palo Alto city directories and phone books (1924\u20131925); actual years open may be longer.",
-  "lat": 37.4449355,
-  "lng": -122.1622055
  },
  {
   "name": "Yamamura Grocery",
@@ -9082,18 +9034,6 @@
   "lng": -122.1596124
  },
  {
-  "name": "Wideman's",
-  "address": "185 University Ave",
-  "start": 1952,
-  "end": 1962,
-  "category": "retail",
-  "approx": true,
-  "source": "directory",
-  "note": "Clothing store. Listed in Palo Alto city directories and phone books (1952\u20131962); actual years open may be longer.",
-  "lat": 37.4447261,
-  "lng": -122.1631693
- },
- {
   "name": "Eve Young",
   "address": "370 University Ave",
   "start": 1947,
@@ -10381,11 +10321,11 @@
   "name": "McCosh Draperies",
   "address": "129 Lytton Ave",
   "start": 1947,
-  "end": 1957,
+  "end": 1958,
   "category": "retail",
   "approx": true,
   "source": "directory",
-  "note": "Drapery shop. Listed in Palo Alto city directories and phone books (1947\u20131957); actual years open may be longer.",
+  "note": "Drapery shop. Listed in Palo Alto city directories and phone books (1947\u20131958); actual years open may be longer.",
   "lat": 37.4447538,
   "lng": -122.165011
  },
@@ -12920,18 +12860,6 @@
   "note": "Tavern. Listed in Palo Alto city directories and phone books (1958); actual years open may be longer.",
   "lat": 37.4439561,
   "lng": -122.1645998
- },
- {
-  "name": "McCosh's",
-  "address": "129 Lytton Ave",
-  "start": 1958,
-  "end": 1958,
-  "category": "services",
-  "approx": true,
-  "source": "directory",
-  "note": "Upholstery shop. Listed in Palo Alto city directories and phone books (1958); actual years open may be longer.",
-  "lat": 37.4447538,
-  "lng": -122.165011
  },
  {
   "name": "Alley Art",
