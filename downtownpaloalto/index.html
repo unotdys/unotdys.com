@@ -90,6 +90,11 @@ textarea.field{resize:vertical;min-height:80px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .acts{display:flex;gap:10px;justify-content:flex-end;align-items:center}
 #msg{margin-right:auto;font-size:13px}
+#bposts{list-style:none;margin:0;padding:0;max-height:38vh;overflow:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#bposts li{padding:10px 2px;border-bottom:1px solid var(--line)}#bposts li:last-child{border-bottom:0}
+#bposts b{font-weight:600}#bposts time{color:var(--dim);font-size:12px;margin-left:6px}#bposts p{margin:4px 0 0;white-space:pre-wrap;color:var(--ink);font-size:14px}
+#bposts .empty{padding:12px 2px;color:var(--dim);font-size:14px}
+.history{font-size:13px;color:var(--dim)}
 #msg.err{color:var(--bad)}
 @media (max-width:760px){
   header{grid-template-columns:1fr;padding-left:12px;padding-right:12px}
@@ -133,7 +138,7 @@ textarea.field{resize:vertical;min-height:80px}
     </div>
     <ul id="list"></ul>
     <div class="foot">
-      <div class="btns"><button class="ghost" id="suggestBtn">Suggest a place</button><button class="ghost" id="contactBtn">Contact us</button></div>
+      <div class="btns"><button class="ghost" id="suggestBtn">Suggest a place</button><button class="ghost" id="contactBtn">Contact us</button><button class="ghost" id="boardBtn">Community board</button></div>
       <div>Years with ~ are estimates. Today’s places come from OpenStreetMap. The satellite photo shows downtown today.</div>
     </div>
   </aside>
@@ -181,6 +186,23 @@ textarea.field{resize:vertical;min-height:80px}
       <span id="cmsg" role="status"></span>
       <button type="button" class="ghost" id="ccancel">Cancel</button>
       <button type="submit" id="csend">Send message</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="bdlg" aria-labelledby="bTitle">
+  <form id="bform" novalidate>
+    <h2 id="bTitle">Community board</h2>
+    <p id="bIntro" class="history"></p>
+    <ul id="bposts" aria-live="polite"></ul>
+    <label>Your name <span>optional</span><input class="field" name="name" maxlength="40" autocomplete="nickname"></label>
+    <label>Add to the discussion<textarea class="field" name="message" maxlength="1000" required placeholder="A memory, a question, a correction…"></textarea></label>
+    <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+    <p style="font-size:12px">Be kind. No ads, links or personal details about other people. Posts are moderated, and some are held for review before they appear.</p>
+    <div class="acts">
+      <span id="bmsg" role="status"></span>
+      <button type="button" class="ghost" id="bclose">Close</button>
+      <button type="submit" id="bsend">Post</button>
     </div>
   </form>
 </dialog>
@@ -246,7 +268,7 @@ function hist(){
     const bh=Math.min(h, Math.max(n?2:0, n/max*(h-2))); g.fillRect(i*bw, h-bh, Math.max(1,bw-1), bh); });
 }
 function popup(s){
-  return `<div class="pop"><h3>${esc(s.name)}</h3><div class="yrs">${yrs(s)}</div><div class="addr">${esc(s.address)}</div>${esc(s.note)}${s.approx?'<div class="est">~ Dates are estimates.</div>':""}${s.start_unknown?'<div class="est">Know when it opened? Use Suggest a fix.</div>':""}<br><button class="fix" data-name="${esc(s.name)}">Suggest a fix</button></div>`;
+  return `<div class="pop"><h3>${esc(s.name)}</h3><div class="yrs">${yrs(s)}</div><div class="addr">${esc(s.address)}</div>${esc(s.note)}${s.approx?'<div class="est">~ Dates are estimates.</div>':""}${s.start_unknown?'<div class="est">Know when it opened? Use Suggest a fix.</div>':""}<br><button class="fix" data-name="${esc(s.name)}">Suggest a fix</button>${threadOf(s.address)?` <button class="fix disc" data-addr="${esc(s.address)}">Discussion${boardCounts[threadOf(s.address)]?` (${boardCounts[threadOf(s.address)]})`:""}</button>`:""}</div>`;
 }
 function focusStore(s){
   if(!isOpen(s,+slider.value)){ slider.value=s.start; render(); }
@@ -325,7 +347,7 @@ function openForm({kind="addition", name=""}={}){
 }
 $("suggestBtn").onclick=()=>openForm();
 $("cancel").onclick=()=>dlg.close();
-document.addEventListener("click",e=>{ const b=e.target.closest(".fix"); if(b){ map.closePopup(); openForm({kind:"correction",name:b.dataset.name}); } });
+document.addEventListener("click",e=>{ const b=e.target.closest(".fix:not(.disc)"); if(b){ map.closePopup(); openForm({kind:"correction",name:b.dataset.name}); } });
 form.onsubmit=async e=>{
   e.preventDefault();
   const d=Object.fromEntries(new FormData(form));
@@ -369,6 +391,56 @@ cform.onsubmit=async e=>{
     bad(err.name==="TypeError" ? "The message didn't go through. Check your connection and try again." : err.message);
     $("csend").disabled=false; $("csend").textContent="Send message";
   }
+};
+
+/* Message boards: one per street address, plus a site-wide board */
+const BOARD = "https://agenticallymine.com/api/dpa/board";
+let boardCounts = {}, boardThread = "site", boardOpened = 0;
+const threadOf = a => { const t = String(a||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  return /^\d/.test(t) && t.length >= 3 ? "a:" + t.slice(0,80) : null; };
+fetch(BOARD + "/counts",{cache:"no-cache"}).then(r=>r.json()).then(c=>{ boardCounts=c||{}; }).catch(()=>{});
+const bdlg=$("bdlg"), bform=$("bform"), bmsg=$("bmsg");
+const fmtDate = t => new Date(t*1000).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+function renderPosts(list){
+  const ul=$("bposts"); ul.innerHTML="";
+  if(!list.length){ ul.innerHTML='<li class="empty">No posts yet. Start the conversation.</li>'; return; }
+  list.forEach(p=>{ const li=document.createElement("li");
+    li.innerHTML=`<b>${esc(p.name)}</b><time>${fmtDate(p.created)}</time><p>${esc(p.message)}</p>`; ul.appendChild(li); });
+  ul.scrollTop=ul.scrollHeight;
+}
+async function openBoard(address){
+  boardThread = address ? threadOf(address) : "site";
+  $("bTitle").textContent = address ? address : "Community board";
+  if(address){
+    const here = stores.filter(s=>s.address===address).sort((a,b)=>a.start-b.start);
+    $("bIntro").textContent = "Here over the years: " + here.map(s=>`${s.name} (${yrs(s)})`).join(", ") + ".";
+  } else $("bIntro").textContent = "Talk about downtown Palo Alto: memories, questions, old photos you'd like to find.";
+  bform.reset(); bmsg.textContent=""; bmsg.className=""; $("bsend").disabled=false; $("bsend").textContent="Post";
+  $("bposts").innerHTML='<li class="empty">Loading…</li>'; boardOpened=Date.now(); bdlg.showModal();
+  try{ const r=await fetch(`${BOARD}?thread=${encodeURIComponent(boardThread)}`,{cache:"no-cache"}); renderPosts((await r.json()).posts||[]); }
+  catch{ $("bposts").innerHTML='<li class="empty">The discussion didn’t load. Try again in a minute.</li>'; }
+}
+$("boardBtn").onclick=()=>openBoard(null);
+$("bclose").onclick=()=>bdlg.close();
+document.addEventListener("click",e=>{ const b=e.target.closest(".disc"); if(b){ e.stopPropagation(); map.closePopup(); openBoard(b.dataset.addr); } }, true);
+bform.onsubmit=async e=>{
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(bform));
+  const bad=t=>{ bmsg.textContent=t; bmsg.className="err"; };
+  if(d.message.trim().length<3) return bad("Write a message first.");
+  $("bsend").disabled=true; $("bsend").textContent="Posting…"; bmsg.textContent=""; bmsg.className="";
+  try{
+    const r=await fetch(BOARD,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...d,thread:boardThread,opened:boardOpened})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(j.error||"The post didn’t go through. Try again in a minute.");
+    if(j.status==="published"){
+      const ul=$("bposts"); if(ul.querySelector(".empty")) ul.innerHTML="";
+      const li=document.createElement("li"); li.innerHTML=`<b>${esc(d.name.trim()||"Neighbor")}</b><time>just now</time><p>${esc(d.message.trim())}</p>`;
+      ul.appendChild(li); ul.scrollTop=ul.scrollHeight; boardCounts[boardThread]=(boardCounts[boardThread]||0)+1;
+      bform.message.value=""; bmsg.textContent="Posted. Thank you!";
+    } else { bform.message.value=""; bmsg.textContent="Thanks. Your post is being reviewed and will appear if it follows the guidelines."; }
+    $("bsend").disabled=false; $("bsend").textContent="Post"; boardOpened=Date.now();
+  }catch(err){ bad(err.name==="TypeError"?"The post didn’t go through. Check your connection and try again.":err.message); $("bsend").disabled=false; $("bsend").textContent="Post"; }
 };
 
 let timer=null;
