@@ -531,6 +531,18 @@
   "source": "suggestion"
  },
  {
+  "name": "Palermo Ristorante",
+  "address": "452 University Ave",
+  "start": 1999,
+  "end": 2005,
+  "category": "food",
+  "approx": true,
+  "note": "Small, family-owned Italian restaurant, a longtime favorite on University Avenue. Open by at least 1999 (opening year not yet known); it moved out in 2005, and the space later became Chicken Ranch, Mint Leaf, Han Fine Korean Cuisine and Umami Burger.",
+  "lat": 37.4476001,
+  "lng": -122.1596124,
+  "source": "suggestion"
+ },
+ {
   "name": "Nola's",
   "address": "near Ramona St",
   "start": 2013,

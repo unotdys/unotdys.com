@@ -203,6 +203,46 @@ if os.path.exists(HS):
         if any(norm(x["name"]) == norm(e["name"]) and abs(x["lat"] - e["lat"]) < 0.0004 and abs(x["lng"] - e["lng"]) < 0.0004 for x in out): continue
         k = e.pop("kind", ""); cat = "fitness" if k in FIT else "food" if k in FOOD else "entertainment" if k in ENT else "hotel" if k in HOTEL else "services" if k in SERV else "retail"
         out.append(dict(e, category=cat)); closed += 1
+    # ---- News: openings/closings reported by Palo Alto Online's Peninsula Foodist (most precise source for 2014+)
+    def yr(dt):
+        m = re.match(r"(\d{4})", str(dt or "")); return int(m.group(1)) if m else None
+    groups = {}
+    for e in hs.get("news", []):
+        k = norm(e["name"]); g = groups.setdefault(k, {"name": e["name"], "addrs": [], "open": [], "close": [], "soon": [], "kind": e.get("kind", ""), "url": e.get("url", ""), "seen": []})
+        if e.get("address"): g["addrs"].append(e["address"])
+        y = yr(e.get("date"))
+        if y: g[{"opened": "open", "closed": "close", "opening_soon": "soon", "moved_out": "close"}.get(e.get("event"), "open")].append(y)
+        if e.get("previous_tenant") and e.get("address") and y and e.get("event") in ("opened", "opening_soon"):
+            pk = norm(e["previous_tenant"]); pg = groups.setdefault(pk, {"name": e["previous_tenant"], "addrs": [], "open": [], "close": [], "soon": [], "kind": "", "url": e.get("url", ""), "seen": []})
+            pg["addrs"].append(e["address"]); pg["close"].append(y)
+    news_fixed = news_added = 0
+    for k, g in groups.items():
+        addr = max(set(g["addrs"]), key=g["addrs"].count) if g["addrs"] else ""
+        o = min(g["open"]) if g["open"] else (min(g["soon"]) if g["soon"] else None)
+        c = max(g["close"]) if g["close"] else None
+        if c and o and c < o: o = None
+        hits = [x for x in out if (norm(x["name"]) == k or (wset(x["name"]) and wset(x["name"]) == wset(g["name"])))
+                and (not addr or norm(x["address"]) == norm(addr) or x["address"] == "address not listed")]
+        hits = [x for x in hits if not (c and x["start"] > c + 1) and not (o and x.get("end") and x["end"] < o - 1)]
+        src = f"Palo Alto Online's Peninsula Foodist reported it {'opening in ' + str(o) if o else ''}{' and ' if o and c else ''}{'closing in ' + str(c) if c else ''}."
+        if hits:
+            for x in hits:
+                if o and (x.get("start_unknown") or x.get("approx") or x.get("source") in ("osm", "osm-history", "directory")):
+                    x["start"] = o; x.pop("start_unknown", None); x["approx"] = False
+                if c and (x.get("end") is None or x.get("approx")): x["end"] = c
+                if "Peninsula Foodist" not in x["note"]: x["note"] = (x["note"] + " " + src).strip()
+                news_fixed += 1
+            continue
+        if not addr or not (o or c): continue
+        ll = geocode(addr)
+        if not ll or not in_area(*ll): continue
+        start = o or c; end = c if c else (None if o and o >= CUR - 2 else o)
+        cat = "food"
+        out.append({"name": g["name"], "address": addr, "start": start, "end": end, "category": cat, "approx": not (o and (c or end is None)),
+                    "source": "news", "lat": ll[0], "lng": ll[1],
+                    "note": f"{(g['kind'] or 'Restaurant').capitalize()}. {src}" + ("" if c or end is None else " Later status unknown.")})
+        news_added += 1
+    print(f"News: {news_fixed} entries dated, {news_added} places added from Peninsula Foodist")
     print(f"History: {added_dir} directory entries added ({skipped_dir} outside the area or already curated), {dated} OSM places dated, {closed} closed OSM places added")
 
 # ---------------------------------------------------------------------------
