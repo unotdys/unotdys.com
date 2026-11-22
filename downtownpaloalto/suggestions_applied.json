@@ -8,7 +8,36 @@
    "end": 2016,
    "category": "food",
    "approx": false
+  },
+  {
+   "name": "Marufuku Ramen",
+   "address": "374 University Ave",
+   "start": 2026,
+   "end": null,
+   "category": "food",
+   "approx": true,
+   "note": "Hakata-style ramen chain, opened in 2026 in the former Starbucks space."
   }
  ],
- "corrections": []
+ "corrections": [
+  {
+   "target": "Starbucks",
+   "target_address": "376 University Ave",
+   "fields": {
+    "start": 2008,
+    "end": 2023,
+    "approx": true,
+    "note": "Starbucks at 374–376 University Ave, open here from about 2008 until April 30, 2023, when it moved to 151 University."
+   }
+  },
+  {
+   "target": "Starbucks",
+   "target_address": "151 University Ave",
+   "fields": {
+    "start": 2023,
+    "approx": false,
+    "note": "Starbucks at University & High, opened in 2023 in the former Lemonade space after moving from 376 University."
+   }
+  }
+ ]
 }
