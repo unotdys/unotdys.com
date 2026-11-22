@@ -161,6 +161,51 @@ if os.path.exists(OSM):
     print(f"OpenStreetMap: {added} current places added, {merged} merged with existing entries; total {len(out)}")
 
 # ---------------------------------------------------------------------------
+# Historical sources (built by /root/dpa-history): city directories + phone books 1904-1963,
+# and OpenStreetMap history 2013-2025. All approximate; curated entries win.
+HS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "history_sources.json")
+if os.path.exists(HS):
+    hs = json.load(open(HS))
+    K2 = math.cos(math.radians(37.446)); A2 = (37.44330, -122.16419); W2 = (37.44952, -122.15802)
+    def fxy(la, ln): return ((ln - A2[1]) * K2 * 111320, (la - A2[0]) * 111320)
+    wx2, wy2 = fxy(*W2); L2 = math.hypot(wx2, wy2); ux2, uy2 = wx2 / L2, wy2 / L2
+    def in_area(la, ln):
+        x, y = fxy(la, ln); along = x * ux2 + y * uy2; perp = -x * uy2 + y * ux2
+        return -80 <= along <= L2 + 200 and -420 <= perp <= 270
+    def wset(n): return set(re.findall(r"[a-z]{4,}", n.lower()))
+    curated = [x for x in out if x.get("source") not in ("osm",)]
+    added_dir = skipped_dir = 0
+    for e in hs.get("directory", []):
+        ll = geocode(e["address"])
+        if not ll or not in_area(*ll): skipped_dir += 1; continue
+        if any(norm(c["address"]) == norm(e["address"]) and (wset(c["name"]) & wset(e["name"]) or norm(c["name"]) == norm(e["name"]))
+               and c["start"] <= e["end"] + 3 and (c["end"] or CUR) >= e["start"] - 3 for c in curated):
+            skipped_dir += 1; continue
+        out.append(dict(e, lat=ll[0], lng=ll[1])); added_dir += 1
+    # first year each current OpenStreetMap place was mapped (2013+)
+    since = []
+    for k, y in hs.get("osm_since", {}).items():
+        nm, ll = k.rsplit("|", 1); la, ln = map(float, ll.split(","))
+        since.append((norm(nm), la, ln, y))
+    dated = 0
+    for x in out:
+        if x.get("source") == "osm" and x.get("start_unknown"):
+            hits = [y for n, la, ln, y in since if n == norm(x["name"]) and abs(la - x["lat"]) < 0.0004 and abs(ln - x["lng"]) < 0.0004]
+            if hits and min(hits) > 2013:   # first mapped after OSM coverage was good: a fair opening estimate
+                x["start"] = min(hits); x["approx"] = True; x.pop("start_unknown", None); dated += 1
+                x["note"] = x["note"].replace("the year it opened isn't known yet.", f"first mapped in {min(hits)}, which is roughly when it opened.")
+            elif hits:                      # already mapped in the earliest snapshot: open since 2013 at the latest
+                x["start"] = 2013; x["approx"] = True; x.pop("start_unknown", None); dated += 1
+                x["note"] = x["note"].replace("the year it opened isn't known yet.", "on the map since at least 2013; it may be much older.")
+    closed = 0
+    for e in hs.get("osm_closed", []):
+        if not in_area(e["lat"], e["lng"]): continue
+        if any(norm(x["name"]) == norm(e["name"]) and abs(x["lat"] - e["lat"]) < 0.0004 and abs(x["lng"] - e["lng"]) < 0.0004 for x in out): continue
+        k = e.pop("kind", ""); cat = "fitness" if k in FIT else "food" if k in FOOD else "entertainment" if k in ENT else "hotel" if k in HOTEL else "services" if k in SERV else "retail"
+        out.append(dict(e, category=cat)); closed += 1
+    print(f"History: {added_dir} directory entries added ({skipped_dir} outside the area or already curated), {dated} OSM places dated, {closed} closed OSM places added")
+
+# ---------------------------------------------------------------------------
 # Accepted corrections to existing entries (match by name, and address if given).
 fixed = 0
 for c in sug.get("corrections", []):
