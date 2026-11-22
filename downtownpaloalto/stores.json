@@ -555,6 +555,18 @@
   "source": "suggestion"
  },
  {
+  "name": "Cafe Renaissance",
+  "address": "321 Hamilton Ave",
+  "start": 2006,
+  "end": 2011,
+  "category": "food",
+  "approx": true,
+  "note": "Cozy Mediterranean-leaning cafe and restaurant across Hamilton from the Chase bank, known for dishes like gazpacho and house-made cheesecake. In the Palo Alto Weekly's dining listings from at least 2006 to 2008; Curry Up Now later took over the space. Exact years not yet confirmed.",
+  "lat": 37.4455464,
+  "lng": -122.1602567,
+  "source": "suggestion"
+ },
+ {
   "name": "Nola's",
   "address": "near Ramona St",
   "start": 2013,
@@ -20372,18 +20384,6 @@
   "source": "osm-history",
   "note": "Dry cleaning. On OpenStreetMap 2013\u20132021; actual years open may differ.",
   "category": "services"
- },
- {
-  "name": "cafe renaissance",
-  "address": "321 Hamilton Ave",
-  "lat": 37.4454279,
-  "lng": -122.1601083,
-  "start": 2013,
-  "end": 2017,
-  "approx": true,
-  "source": "osm-history",
-  "note": "Restaurant. On OpenStreetMap 2013\u20132017; actual years open may differ.",
-  "category": "food"
  },
  {
   "name": "Kind Nail Care",
