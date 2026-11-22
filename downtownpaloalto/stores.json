@@ -533,13 +533,25 @@
  {
   "name": "Palermo Ristorante",
   "address": "452 University Ave",
-  "start": 1999,
+  "start": 1991,
   "end": 2005,
   "category": "food",
   "approx": true,
-  "note": "Small, family-owned Italian restaurant, a longtime favorite on University Avenue. Open by at least 1999 (opening year not yet known); it moved out in 2005, and the space later became Chicken Ranch, Mint Leaf, Han Fine Korean Cuisine and Umami Burger.",
+  "note": "Small, family-owned Italian restaurant and a longtime University Avenue favorite, remembered open by 1991 (it may be older). It moved out in 2005; the space later became Chicken Ranch, Mint Leaf, Han Fine Korean Cuisine and Umami Burger.",
   "lat": 37.4476001,
   "lng": -122.1596124,
+  "source": "suggestion"
+ },
+ {
+  "name": "Taxi's Hamburgers",
+  "address": "403 University Ave",
+  "start": 1995,
+  "end": 2011,
+  "category": "food",
+  "approx": true,
+  "note": "Retro hamburger diner with booths, a counter and a jukebox at the corner of University and Waverley, part of a small Bay Area chain. Opened December 11, 1995; still open in 2008, closing year not yet confirmed.",
+  "lat": 37.4473449,
+  "lng": -122.1605654,
   "source": "suggestion"
  },
  {
