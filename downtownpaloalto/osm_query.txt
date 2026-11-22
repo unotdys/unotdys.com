@@ -1,0 +1,9 @@
+[out:json][timeout:50];
+(
+  nwr["shop"](37.4360,-122.1700,37.4540,-122.1500);
+  nwr["amenity"~"^(restaurant|cafe|bar|pub|fast_food|ice_cream|cinema|theatre|nightclub|bank|pharmacy|food_court|biergarten)$"](37.4360,-122.1700,37.4540,-122.1500);
+  nwr["tourism"~"^(hotel|motel|guest_house)$"](37.4360,-122.1700,37.4540,-122.1500);
+  nwr["leisure"~"^(fitness_centre|sports_centre|dance|climbing)$"](37.4360,-122.1700,37.4540,-122.1500);
+  nwr["sport"~"yoga|pilates|fitness|boxing|climbing"]["name"](37.4360,-122.1700,37.4540,-122.1500);
+);
+out center tags;
