@@ -63,6 +63,8 @@ aside{background:var(--panel);border-left:1px solid var(--line);display:flex;fle
 .foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);font-size:12px;color:var(--dim);display:grid;gap:8px}
 .foot button{justify-self:start}
 .foot .btns{display:flex;gap:8px;flex-wrap:wrap}
+.foot .links{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}.foot .links a,.foot .links button{color:var(--ink);background:none;border:0;padding:0;font:600 13px var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+#adlg ul{margin:0;padding-left:18px;color:var(--dim);font-size:14px}#adlg li{margin:4px 0}#adlg a{color:var(--ink)}
 .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--panel);color:var(--ink);border-radius:6px}
 .leaflet-popup-content{margin:12px 14px;font:14px/1.45 var(--body);max-width:260px}
 .pop h3{margin:0 0 2px;font:600 16px/1.25 var(--body)}
@@ -106,7 +108,7 @@ textarea.field{resize:vertical;min-height:80px}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:none}
   .foot{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
-  .foot div{display:none}
+  .foot > div:not(.btns):not(.links){display:none}
   aside{border-left:0;border-top:1px solid var(--line)}
   .row{grid-template-columns:1fr 1fr}
   .row label:last-child{grid-column:1/-1}
@@ -139,6 +141,7 @@ textarea.field{resize:vertical;min-height:80px}
     <ul id="list"></ul>
     <div class="foot">
       <div class="btns"><button class="ghost" id="suggestBtn">Suggest a place</button><button class="ghost" id="contactBtn">Contact us</button><button class="ghost" id="boardBtn">Community board</button></div>
+      <div class="links"><button id="aboutBtn">About</button><a href="https://github.com/unotdys/neighborhood-timeline-map">Open source: make one for your town</a><a href="https://unotdys.com/">unotdys.com</a></div>
       <div>Years with ~ are estimates. Today’s places come from OpenStreetMap. The satellite photo shows downtown today.</div>
     </div>
   </aside>
@@ -187,6 +190,25 @@ textarea.field{resize:vertical;min-height:80px}
       <button type="button" class="ghost" id="ccancel">Cancel</button>
       <button type="submit" id="csend">Send message</button>
     </div>
+  </form>
+</dialog>
+
+<dialog id="adlg" aria-labelledby="aTitle">
+  <form method="dialog">
+    <h2 id="aTitle">About this map</h2>
+    <p>Drag the timeline to see which shops, restaurants, theaters and offices stood in downtown Palo Alto in any year from 1900 to today. It's a community project: neighbors add the places they remember, and every suggestion is checked against historical sources before it goes on the map.</p>
+    <p><b>Where the history comes from</b></p>
+    <ul>
+      <li>Palo Alto city directories from 1904, 1924 and 1925 (Internet Archive)</li>
+      <li>Palo Alto telephone books and Yellow Pages, 1929–1963 (Library of Congress)</li>
+      <li>OpenStreetMap, for today's businesses and its year-by-year history since 2013</li>
+      <li>Local reporting and histories, including Palo Alto Online and the Palo Alto Historical Association</li>
+      <li>Memories and corrections from neighbors like you</li>
+    </ul>
+    <p>Years marked ~ are estimates. Directory entries show the years a business was listed, so it may have been open longer. See something wrong? Use "Suggest a fix" on any place.</p>
+    <p>The map is free and open source. <a href="https://github.com/unotdys/neighborhood-timeline-map">Make one for your own neighborhood</a> in about 15 minutes.<span id="articleLink"></span></p>
+    <p style="font-size:12px">Built by <a href="https://unotdys.com/">Ryo Koyama</a>. Map data © OpenStreetMap contributors (ODbL). Imagery © Esri, Maxar, Earthstar Geographics.</p>
+    <div class="acts"><button class="ghost" value="close">Close</button></div>
   </form>
 </dialog>
 
@@ -421,6 +443,9 @@ async function openBoard(address){
   catch{ $("bposts").innerHTML='<li class="empty">The discussion didn’t load. Try again in a minute.</li>'; }
 }
 $("boardBtn").onclick=()=>openBoard(null);
+const ARTICLE_URL = "";   // set to the published article (Medium) once it is live
+if(ARTICLE_URL) $("articleLink").innerHTML = ` <a href="${ARTICLE_URL}">Read how it was built.</a>`;
+$("aboutBtn").onclick=()=>$("adlg").showModal();
 $("bclose").onclick=()=>bdlg.close();
 document.addEventListener("click",e=>{ const b=e.target.closest(".disc"); if(b){ e.stopPropagation(); map.closePopup(); openBoard(b.dataset.addr); } }, true);
 bform.onsubmit=async e=>{
